@@ -1,0 +1,261 @@
+﻿
+@{
+    ViewBag.Title = "Create Stock Retrieval";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+</head>
+
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <form action="./RequisitionFormMain" method="post">
+                <!-- Requisition Form -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    Requisition Form
+                                </h2>                                
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox" id="md_checkbox_RFSelectAll" class="filled-in chk-col-blue" onClick="toggle1(this)" checked />
+                                                    <label for="md_checkbox_RFSelectAll"></label>
+                                                </th>
+                                                <th>Date</th>
+                                                <th>Requisition#</th>
+                                                <th>Department</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th>Date</th>
+                                                <th>Requisition#</th>
+                                                <th>Department</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.reqlist)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" id="md_checkbox_RL${@item.RequisitionID}" name="reqID" value="@item.RequisitionID" class="filled-in chk-col-blue" checked />
+                                                        <label for="md_checkbox_RL${@item.RequisitionID}"></label>
+
+                                                    </td>
+                                                    <td>@string.Format("{0:dd/MM/yyyy}", @item.Date)</td>
+                                                    <td>@item.RequisitionID</td>
+                                                    <td>@item.Employee1.Department.DepartmentName</td>
+                                                    <td><a href="./RequisitionDetail/@item.RequisitionID">Details</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Requisition Form -->
+                <!-- Button "Generate"-->
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <button type="submit" class="btn btn-primary waves-effect">Generate List</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br />
+        <form action="./StockRetrievalMain" method="post">
+            <!-- Retrieval List -->
+
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Retrieval List
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" id="md_checkbox_ICSelectAll" class="filled-in chk-col-blue" onClick="toggleme(this)" checked />
+                                                <label for="md_checkbox_ICSelectAll"></label>
+                                            </th>
+                                            <th>Item Code</th>
+                                            <th>Category</th>
+                                            <th>Item Description</th>
+                                            <th>Quantity</th>
+                                            <th>Current Stock</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Item Code</th>
+                                            <th>Category</th>
+                                            <th>Item Description</th>
+                                            <th>Quantity</th>
+                                            <th>Current Stock</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @if (ViewBag.relist != null)
+                                        {
+                                            foreach (var item in ViewBag.relist)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" id="md_checkbox_RL${@item.ItemCode}" name="itemcode" value="@item.ItemCode" class="filled-in chk-col-blue" checked />
+                                                        <label for="md_checkbox_RL${@item.ItemCode}"></label>
+                                                    </td>
+                                                    <td>@item.ItemCode</td>
+                                                    <td>@item.Category</td>
+                                                    <td>@item.Description</td>
+                                                    <td>@item.Qty<input type="hidden" name="qty" value="@item.Qty" /></td>
+                                                    @foreach (var itemo in ViewBag.cat)
+                                                    {
+                                                        if (itemo.ItemCode == item.ItemCode)
+                                                        {
+                                                            <th>@itemo.CurrentStockQty</th>
+                                                        }
+                                                    }
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- #END# Retrieval List -->
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <button type="submit" class="btn btn-primary waves-effect">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br />
+
+    </section>
+
+    <!--Javascript-->
+    <script>
+        function toggle1(source) {
+            var checkboxes = document.querySelectorAll('input[name="reqID"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i] != source)
+                    checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+    
+    <script>
+        function toggleme(source) {
+            var checkboxess = document.querySelectorAll('input[name="itemcode"]');
+            for (var i = 0; i < checkboxess.length; i++) {
+                if (checkboxess[i] != source)
+                    checkboxess[i].checked = source.checked;
+            }
+        }
+    </script>
+
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+</body>
+
+</html>

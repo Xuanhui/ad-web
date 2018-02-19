@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "Pending Approval Order";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+</head>
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h3>Order Details</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <p class="align-left">
+                <b>Order No: @ViewBag.po.PurchaseOrderID</b>
+            </p>
+        </div>
+        <!-- Basic Examples -->
+        @foreach (var item in ViewBag.slist)
+        {
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="body">
+
+                            <div class="table-responsive">
+                                <table id="table" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr class="titlerow">
+                                            <th>Supplier Code</th>
+                                            <th>Item Number</th>
+                                            <th>Description</th>
+                                            <th>Quantity</th>
+                                            <th>Unit Price</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var s in ViewBag.odlist)
+                                        {
+                                            if (item.SupplierID == s.Supplier)
+                                            {
+                                                <tr>
+                                                    <td class="rowDataSd">@s.Supplier</td>
+                                                    <td class="rowDataSd">@s.ItemCode</td>
+                                                    <td class="rowDataSd">@s.Catalogue.Description</td>
+                                                    <td class="rowDataSd">@s.Qty</td>
+                                                    <td class="rowDataSd">@String.Format("{0:c}", s.Catalogue.AveragePrice)</td>
+                                                    <td class="rowDataSd">@String.Format("{0:c}", s.Qty * s.Catalogue.AveragePrice)</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="totalColumn">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><b>Subtotal</b></td>
+                                            @foreach (var g in ViewBag.subtotal)
+                                            {
+                                                if (g.SupplierName == item.SupplierID)
+                                                {
+                                                    <td class="total">@String.Format("{0:c}", g.Stotal)</td>
+                                                }
+                                            }
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        <!-- #END# Basic Examples -->
+        <div><b>Grand Total: @String.Format("{0:c}", ViewBag.gtotal)</b></div>
+        <br />
+        <div>
+            @if (ViewBag.user.Role.RoleID == 4 || ViewBag.user.Role.RoleID == 5) //For Supervisor and Manager
+            {
+                if (ViewBag.po.Status == "Pending")
+                {
+                    @*<a href="/home/OrderApproval" button type="button" class="btn btn-default waves-effect" style="width:75px">Approve</a>
+                        <a href="/home/OrderApproval" button type="button" class="btn btn-default waves-effect" style="width:75px">Reject</a>*@
+                    <a href="./Approved?approvedpoid=@ViewBag.po.PurchaseOrderID" button type="button" class="btn btn-default waves-effect" style="width:75px">Approve</a>
+                    <a href="./Rejected?rejectedpoid=@ViewBag.po.PurchaseOrderID" button type="button" class="btn btn-default waves-effect" style="width:75px">Reject</a>
+                }
+                else
+                {
+                    <!-- Basic Table -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h2>
+                                        Authorization
+                                    </h2>
+                                </div>
+                                <div class="body table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Status</th>
+                                                <th>Deciding Authority</th>
+                                                <th>Decision Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{var a = ViewBag.po;
+                                                <tr>
+                                                    <td>@a.Status</td>
+                                                    <td>@a.Employee.EmployeeName</td>
+                                                    <td>@string.Format("{0:d}", @a.ApprovalDate)</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- #END# Basic Table -->
+              }
+          }
+
+            @*<form action="/home/OrderApproval" method="post">
+                    <input type="hidden" name="auser" value="@ViewBag.auser.EmployeeID">
+                    <button type="submit" name="approvebutton" class="btn btn-default waves-effect" role="button" style="width:75px">Aprove</button>
+                    <input type="hidden" name="auser" value="@ViewBag.auser.EmployeeID">
+                    <button type="submit" name="rejectbutton" class="btn btn-default waves-effect" role="button" style="width:75px">Reject</button>
+                </form>*@
+        </div>
+        <br>
+    </section>
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+</body>
+</html>

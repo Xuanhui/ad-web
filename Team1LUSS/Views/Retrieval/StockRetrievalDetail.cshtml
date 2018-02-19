@@ -1,0 +1,301 @@
+﻿@{
+    ViewBag.Title = "Stock Retrieval Details";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Wait Me Css -->
+    <link href="../../plugins/waitme/waitMe.css" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+    
+    
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+    
+    <!-- Bootstrap Spinner Css -->
+    <link href="../../plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
+
+</head>
+
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+
+            <form action="./StockRetrievalMain" method="post">
+                <!-- Requisition Form -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <h2>
+                                            Retrieval Form - # @ViewBag.rdd.RetrievalID<input type="hidden" name="rid" value="@ViewBag.rdd.RetrievalID" />
+                                        </h2>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <button type="submit" class="btn btn-primary waves-effect" name="action" value="UpdateAll">Update All</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox" id="md_checkbox_SelectAll" class="filled-in chk-col-blue" onClick="toggle(this)" checked />
+                                                    <label for="md_checkbox_SelectAll"></label>
+                                                </th>
+                                                <th>Item Code</th>
+                                                <th>Description</th>
+                                                <th>Quantity Needed</th>
+                                                <th>Quantity Collected</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th>Item Code</th>
+                                                <th>Description</th>
+                                                <th>Quantity Needed</th>
+                                                <th>Quantity Collected</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.rdlist)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" id="md_checkbox_${@item.RetrievalDetailID}" name="rdid" value="@item.RetrievalDetailID" class="filled-in chk-col-blue" checked />
+                                                        <label for="md_checkbox_${@item.RetrievalDetailID}"></label>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.Catalogue.CurrentStockQty >= item.QtyNeeded)
+                                                        {<a href='./StockRetrievalDetail?rid=@ViewBag.rdd.RetrievalID&retDID=@item.RetrievalDetailID&qty=@item.QtyNeeded'>@item.ItemCode</a>}
+                                                        else if (item.Catalogue.CurrentStockQty < item.QtyNeeded)
+                                                        {<a href='./StockRetrievalDetail?rid=@ViewBag.rdd.RetrievalID&retDID=@item.RetrievalDetailID&qty=@item.Catalogue.CurrentStockQty'>@item.ItemCode</a>}
+                                                        else if (item.Status == "Collected")
+                                                        {<a href='./StockRetrievalDetail?rid=@ViewBag.rdd.RetrievalID&retDID=@item.RetrievalDetailID&qty=@item.ActualQty'>@item.ItemCode</a> }                                                        
+                                                    </td>
+                                                    <td> @item.Catalogue.Description </td>
+                                                    <td> @item.QtyNeeded </td>
+                                                    <td>
+                                                        @if (item.Status == null && item.Catalogue.CurrentStockQty >= item.QtyNeeded)
+                                                        {
+                                                            <input type="hidden" name="QtyCollected" value="@item.QtyNeeded" />@item.QtyNeeded
+                                                        }
+                                                        else if (item.Status == null && item.Catalogue.CurrentStockQty < item.QtyNeeded)
+                                                        {
+                                                            <input type="hidden" name="QtyCollected" value="@item.Catalogue.CurrentStockQty" />@item.Catalogue.CurrentStockQty
+                                                        }
+                                                        else if (item.Status == "Collected")
+                                                        {
+                                                            <input type="hidden" name="QtyCollected" value="@item.ActualQty" />@item.ActualQty
+                                                        }
+                                                    </td>
+
+                                                    <td> @item.Status </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="container-fluid">
+            <form action="./StockRetrievalDetail/@ViewBag.rdd.RetrievalID" method="post">
+                <!-- Adjustment Voucher -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <h2>
+                                        <strong>
+                                            Retrieval Item - @ViewBag.ritem.ItemCode
+                                        </strong>
+                                        <input type="hidden" name="itemcode" value="@ViewBag.ritem.ItemCode">
+                                        <input type="hidden" name="retDID" value="@ViewBag.ritem.RetrievalDetailID" />
+                                        <input type="hidden" name="rid" value="@ViewBag.ritem.RetrievalID">
+                                    </h2>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <h2>
+                                        Quantity Needed  @ViewBag.ritem.QtyNeeded
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Quantity Collected</th>
+                                                <th><input type="hidden" id="QtyCollected" value="@ViewBag.CQty" />@ViewBag.CQty</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Actual Quantity Collected</td>
+                                                <td>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                        <div class="input-group spinner" data-trigger="spinner">
+                                                            <div class="form-line">
+                                                                <input type="number" class="qty" name="Qty" value="@ViewBag.CQty" align="centre" onchange="Calculate(this.value)" min ="0" max="@ViewBag.ritem.QtyNeeded" data-rule="quantity">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><strong>Adjustment Voucher</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Adjusted Quantity<br /><br /><br />Reason<br /><br /></td>
+                                                <td>
+                                                    <input type="text" id="pom" name="pom" readonly>
+                                                    <input type="number" id="AdjQty" name="AdjQty" readonly>
+                                                    <br /><br /><br />
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <textarea rows="1" name="reason" class="form-control no-resize auto-growth" placeholder=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Adjustment Voucher -->
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <button type="submit" class="btn btn-primary waves-effect">Confirm Collection</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </section>
+
+
+    <!--JavaScript - Calculate & toggle-->
+    <script>
+        function Calculate(val)
+        {
+            var Qty = val * 1;
+            var CQty = document.getElementById("QtyCollected").value * 1;
+            var max = Math.max(Qty, CQty);
+            document.getElementById("AdjQty").value = max - Math.min(Qty,CQty);
+            if (CQty == max)
+            {
+                document.getElementById("pom").value = "-";
+            }
+            else if (Qty == max)
+            {
+                document.getElementById("pom").value = "+";
+            }
+        }
+
+
+        function toggle(source)
+        {
+            var checkboxes = document.querySelectorAll('input[name="rdid"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i] != source)
+                    checkboxes[i].checked = source.checked;
+            }
+        }
+
+    </script>
+    
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Jquery Spinner Plugin Js -->
+    <script src="../../plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+    <!-- Autosize Plugin Js -->
+    <script src="../../plugins/autosize/autosize.js"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="../../plugins/momentjs/moment.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+</body>
+
+</html>

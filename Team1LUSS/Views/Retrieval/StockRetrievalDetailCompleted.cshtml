@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Completed Stock Retrieval Details";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+</head>
+
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <ol class="breadcrumb">
+                    <li><a href="@Url.Action("StockRetrievalCompleted", "Retrieval")">Completed Stock Retrieval List</a></li>
+                    <li class="active">Requisition List - @ViewBag.rdd.RetrievalID</li>
+                </ol>
+            </div>
+            <!-- Requisition Form -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                           
+                            <div class="row">
+
+                                <h2>
+                                    Requisition List - #@ViewBag.rdd.RetrievalID
+                                </h2>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <h2>Date  @string.Format("{0:dd/MM/yyyy}", @ViewBag.rdd.Date)</h2>
+                            </div>
+                        </div>
+                       
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Code</th>
+                                            <th>Description</th>
+                                            <th>Quantity Needed</th>
+                                            <th>Quantity Retrieved</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Item Code</th>
+                                            <th>Description</th>
+                                            <th>Quantity Needed</th>
+                                            <th>Quantity Retrieved</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.rdlist)
+                                        {
+                                            <tr>
+                                                <td>@item.ItemCode</td>
+                                                <td>@item.Catalogue.Description</td>
+                                                <td>@item.QtyNeeded</td>
+                                                <td>@item.ActualQty</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# List of Retrieval List-->
+
+        @*<div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <button type="button" class="btn btn-primary waves-effect">Back</button>
+            </div>
+        </div>*@
+        <br />
+
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+</body>
+
+</html>
+
+

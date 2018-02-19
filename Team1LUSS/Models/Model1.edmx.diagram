@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5c2746d150f34771b580d1b63d97e9aa" Name="Diagram1">
+        <EntityTypeShape EntityType="LUSSISModel.AdjustmentVoucher" Width="1.5" PointX="11.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Catalogue" Width="1.5" PointX="6" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Category" Width="1.5" PointX="3.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Department" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Disbursement" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.DisbursementDetail" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Employee" Width="1.5" PointX="6" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.InterimRetrievalStockTable" Width="1.5" PointX="8.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.ItemSupplier" Width="1.5" PointX="13.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.PurchaseOrder" Width="1.5" PointX="8.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.PurchaseOrderDetail" Width="1.5" PointX="13.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Requisition" Width="1.5" PointX="8.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.RequisitionDetail" Width="1.5" PointX="10.5" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Retrieval" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.RetrievalDetail" Width="1.5" PointX="10.5" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Role" Width="1.5" PointX="3.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.StockCard" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LUSSISModel.Supplier" Width="1.5" PointX="11.25" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="LUSSISModel.FK__Adjustmen__Appro__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Adjustmen__Clerk__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Adjustmen__ItemC__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Catalogue__Categ__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Disbursem__ItemC__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__InterimRe__ItemC__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__ItemSuppl__ItemC__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__PurchaseO__ItemC__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Requisiti__ItemC__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Retrieval__ItemC__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__StockCard__ItemC__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Disbursem__Depar__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Employee__Depart__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Disbursem__Clerk__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Disbursem__DeptR__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Disbursem__Disbu__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Requisiti__Disbu__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Employee__RoleID__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__PurchaseO__Appro__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__PurchaseO__Order__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Requisiti__Appro__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Requisiti__Emplo__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Retrieval__ByCle__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__ItemSuppl__Suppl__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__PurchaseO__Purch__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__PurchaseO__Suppl__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Requisiti__Requi__20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="LUSSISModel.FK__Retrieval__Retri__29572725" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "Collection Point";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- JQuery DataTable Css -->
+    <link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+</head>
+
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Authorization -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Collection Point
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <form id="form_collection_point" method="POST" action="./CollectionPoint">
+                                <div class="body table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th width="50%">Current Collection Point: </th>
+                                                <th>@ViewBag.CollectionPoint</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Choose New Collection Point</th>
+                                                <th>Collection Times</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="collection" type="radio" id="radio_30" class="with-gap radio-col-blue" value="Stationery Store" />
+                                                    <label for="radio_30">Stationery Store (Point 1)</label>
+                                                </td>
+                                                <td>8:00am - 12:00pm</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="collection" type="radio" id="radio_31" class="with-gap radio-col-blue" value="Management School" />
+                                                    <label for="radio_31">Management School (Point 2)</label>
+                                                </td>
+                                                <td>10:00am - 2:00pm</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="collection" type="radio" id="radio_32" class="with-gap radio-col-blue" value="Medical School" />
+                                                    <label for="radio_32">Medical School (Point 3)</label>
+                                                </td>
+                                                <td>12:00pm - 4:00pm</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="collection" type="radio" id="radio_33" class="with-gap radio-col-blue" value="Engineering School" />
+                                                    <label for="radio_33">Engineering School (Point 4)</label>
+                                                </td>
+                                                <td>1:00pm - 5:00pm</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="collection" type="radio" id="radio_34" class="with-gap radio-col-blue" value="Science School" />
+                                                    <label for="radio_34">Science School (Point 5)</label>
+                                                </td>
+                                                <td>2:00pm - 6:00pm</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input name="collection" type="radio" id="radio_35" class="with-gap radio-col-blue" value="University Hospital" />
+                                                    <label for="radio_35">University Hospital (Point 6)</label>
+                                                </td>
+                                                <td>3:00pm - 7:00pm</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="rid" value="@ViewBag.ReqID" />
+                                </div>
+                                <div class="col-lg-offset-11 col-md-offset-5 col-sm-offset-4 col-xs-offset-5">
+                                    <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Authorization -->
+        </div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+</body>
+
+</html>

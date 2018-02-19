@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Employee Requisition Update";
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+
+</head>
+
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <ol class="breadcrumb">
+                    <li><a href="@Url.Action("EmployeeReqDetail", "Requisition")/@ViewBag.reqdl[0].RequisitionID">Requisition Form</a></li>
+                    <li class="active">@ViewBag.reqdl[0].RequisitionID</li>
+                </ol>
+            </div>
+            <div class="block-header">
+                <h2>Update Employee Requisition</h2>
+            </div>
+        </div>
+        <!-- Basic Examples -->
+
+        <script>
+            function validateNum() {
+                //var x = document.forms[edit][qty];
+                var y = document.getElementsByName('qty');
+                var z = document.getElementsByName('qty')[01].value;
+
+                for (var i=0; i<y.length; i++) {
+                    var x = document.getElementsByName('qty')[i].value;
+                    //alert("x:"+x);
+                    if (!/^\d+$/.test(x)) {
+                        alert("Qty should be number");
+                        return false;
+                    }
+                    else if (x == "0") {
+                        alert("Qty cannot be 0");
+                        return false;
+
+                    }
+                }
+                //document.write(x);
+            }
+        </script>
+        <!-- Table and Form-->
+        <form action="@Url.Action("EmployeeReq", "Requisition")" name="edit" onsubmit="return validateNum()" method="post">
+            <input type="hidden" name="reqID" value="@ViewBag.reqID" />
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Description</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var i in ViewBag.reqdl)
+                                        {
+                                            <tr>
+                                                <td>@i.Catalogue.Category.CategoryName</td>
+                                                <td>@i.Catalogue.Description</td>
+                                                <td>
+                                                    <input type="text" id="@i.ItemCode" name="qty" value="@i.ItemQty" required />
+                                                    <input type="hidden" name="itemcode" value="@i.ItemCode" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- button -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="right">
+                <a href="@Url.Action("EmployeeReq", "Requisition")/@ViewBag.reqdl[0].RequisitionID" button type="button" class="btn btn-primary waves-effect">
+                    Back
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary waves-effect">Update</button>
+            </div>
+            <!-- button end -->
+        </form>
+
+        <!--Table and Form End-->
+        <br />
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+    <!-- Autosize Plugin Js -->
+    <script src="../../plugins/autosize/autosize.js"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="../../plugins/momentjs/moment.js"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/forms/basic-form-elements.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+</body>
+
+</html>

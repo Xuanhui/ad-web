@@ -1,0 +1,514 @@
+﻿<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="preloader">
+            <div class="spinner-layer pl-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <p>Please wait...</p>
+    </div>
+</div>
+<!-- #END# Page Loader -->
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+<!-- #END# Overlay For Sidebars -->
+<!-- Search Bar -->
+<!-- #END# Search Bar -->
+<!-- Top Bar -->
+<nav class="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+            <a href="javascript:void(0);" class="bars"></a>
+            <a class="navbar-brand" href="@Url.Action("StoreCatalogue", "Inventory")">Logic University Stationary Store Inventory System</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="header">@Html.ActionLink("Log out", "Logout", "Login", null, null)                
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- #Top Bar -->
+<section>
+    <!-- Left Sidebar -->
+    <aside id="leftsidebar" class="sidebar">
+        <!-- User Info -->
+        <div class="user-info">
+            <div class="image">
+                @if (ViewBag.user.Role.RoleID == 1 || ViewBag.user.Role.RoleID == 2)
+                {
+                    <img src="../../images/DeptUser.png" width="40" height="40" alt="User" />
+                }
+                else
+                {
+                    <img src="../../images/boxes.png" width="40" height="40" alt="User" />
+                }
+            </div>
+            <div class="info-container">
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@ViewBag.user.EmployeeName</div>
+                <div class="email">@ViewBag.user.Role.RoleName</div>
+                <div class="email">@ViewBag.user.Department.DepartmentName</div>
+            </div>
+        </div>
+        <!-- #User Info -->
+        <!-- Menu -->
+        <div class="menu">
+            <ul class="list">
+                <li class="header">MAIN NAVIGATION</li>
+                @if (ViewBag.user.Role.RoleID != 3) //All except clerk
+                {
+                    if (ViewBag.Title == "Catalogue" || ViewBag.Title == "Stock Card")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                            @:<li>
+                    }
+                    <a href="@Url.Action("StoreCatalogue", "Inventory")" class="">
+                        <i class="material-icons">list</i>
+                        <span>Catalogue</span>
+                    </a>
+                    @:</li>
+                }
+
+                @if (ViewBag.user.Role.RoleID == 1) //For Employee and Rep
+                {
+                    if(ViewBag.user.Authorization == "Representative")
+                    {
+                        if (ViewBag.Title == "Employee Requisition" || ViewBag.Title == "Create Employee Requisition" || ViewBag.Title == "Employee Requisition Update" || ViewBag.Title == "Employee Requisition Details" || ViewBag.Title == "Requisition for Representatives" || ViewBag.Title == "Requisition details for Representatives" || ViewBag.Title == "Pending Requisition details for Representatives")
+                        {
+                            @:<li class="active">
+                        }
+                        else
+                        {
+                            @:<li>
+                        }
+                        <a href="@Url.Action("DeptRepReqMain", "Requisition")" class="">
+                            <i class="material-icons">list</i>
+                            <span>Requisition</span>
+                        </a>
+                        @:</li>
+                    }
+                    else if (ViewBag.user.Authorization != "Authorized")
+                    {
+                        if (ViewBag.Title == "Employee Requisition" || ViewBag.Title == "Create Employee Requisition" || ViewBag.Title == "Employee Requisition Update" || ViewBag.Title == "Employee Requisition Details")
+                        {
+                            @:<li class="active">
+                        }
+                        else
+                        {
+                            @:<li>
+                        }
+                        <a href="@Url.Action("EmployeeReq", "Requisition")" class="">
+                            <i class="material-icons">list</i>
+                            <span>Requisition</span>
+                        </a>
+                        @:</li>
+                    }
+
+                    if(ViewBag.user.Authorization == "Authorized") //For Temporary Dep Head
+                    {                        
+                        if(ViewBag.Title == "Requisition Forms" || ViewBag.Title == "Requisition Details" || ViewBag.Title == "Pending Requisition Details")
+                        {
+                            @:<li class="active">
+                        }
+                        else
+                        {
+                            @:<li>
+                        }
+
+                        <a href="@Url.Action("DeptHeadReqMain", "Requisition")" class="">
+                            <i class="material-icons">content_copy</i>
+                            <span>Requisition</span>
+                        </a>
+                     @:</li>
+                    }                   
+                }                
+                
+                @if (ViewBag.user.Role.RoleID == 3) //For Clerk
+                {
+                    if (ViewBag.Title == "Catalogue" || ViewBag.Title == "Stock Card" ||  ViewBag.Title == "Stock Adjustment" || ViewBag.Title == "Create Adjustment Voucher Step 1" || ViewBag.Title == "Create Adjustment Voucher Step 2" || ViewBag.Title == "Update Adjustment Voucher" || ViewBag.Title == "View Adjustment For Clerk")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                    
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">content_copy</i>
+                            <span>Inventory</span>
+                        </a>
+                        @:<ul class="ml-menu">
+                            if(ViewBag.Title == "Catalogue")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }                            
+                                <a href="@Url.Action("StoreCatalogue", "Inventory")">Catalogue</a>
+                            @:</li>
+                            if(ViewBag.Title == "Create Adjustment Voucher Step 2" || ViewBag.Title == "Create Adjustment Voucher Step 1" || ViewBag.Title == "Update Adjustment Voucher" || ViewBag.Title == "View Adjustment For Clerk")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }                            
+                                <a href="@Url.Action("ViewAdjustmentForClerk", "Adjustment")">Stock Adjustment</a>
+                            @:</li>
+                        @:</ul>
+                    @:</li>
+                    if(ViewBag.Title == "Approved Requisition Forms" || ViewBag.Title == "Approved Requisition Details" || ViewBag.Title == "Stock Retrieval List" || ViewBag.Title == "Completed Disbursement List" || ViewBag.Title == "Outstanding Disbursement List" || ViewBag.Title == "Disbursement Details" || ViewBag.Title == "Create Purchase Order" || ViewBag.Title == "Order Details" || ViewBag.Title == "Order Approval" || ViewBag.Title == "Pending Approval Order" || ViewBag.Title == "Stock Retrieval" || ViewBag.Title == "Completed Retrieval List" || ViewBag.Title == "Stock Retrieval Disbursement Details" || ViewBag.Title == "Stock Retrieval Details" || ViewBag.Title == "Completed Stock Retrieval Details" || ViewBag.Title == "Stock Retrieval Disbursement" || ViewBag.Title == "Stock Retrieval Disbursement Details" || ViewBag.Title == "Create Stock Retrieval" || ViewBag.Title == "Create Stock Retrieval Details")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                    
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">content_copy</i>
+                            <span>Forms</span>
+                        </a>
+                        @:<ul class="ml-menu">
+                            if(ViewBag.Title == "Approved Requisition Forms" || ViewBag.Title == "Approved Requisition Details")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }
+                                <a href="@Url.Action("ClerkReq", "Requisition")">Requisition Forms</a>
+                            @:</li>
+                            
+
+                            if (ViewBag.Title == "Stock Retrieval" || ViewBag.Title == "Completed Retrieval List" || ViewBag.Title == "Stock Retrieval Disbursement Details" || ViewBag.Title == "Stock Retrieval Details" || ViewBag.Title == "Completed Stock Retrieval Details" || ViewBag.Title == "Stock Retrieval Disbursement" || ViewBag.Title == "Stock Retrieval Disbursement Details" || ViewBag.Title == "Create Stock Retrieval" || ViewBag.Title == "Create Stock Retrieval Details")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }
+                    
+                            <a href="javascript:void(0);" class="menu-toggle">                                
+                                <span>Stock Retrieval</span>
+                            </a>
+                            @:<ul class="ml-menu">
+                                if(ViewBag.Title == "Stock Retrieval")
+                                {
+                                    @:<li class="active">
+                                }
+                                else
+                                {
+                                    @:<li>
+                                }                            
+                                    <a href="@Url.Action("StockRetrievalMain", "Retrieval")">View Stock Retrieval List</a>
+                                @:</li>
+                                if(ViewBag.Title == "Create Stock Retrieval" || ViewBag.Title == "Create Stock Retrieval Details")
+                                {
+                                    @:<li class="active">
+                                }
+                                else
+                                {
+                                    @:<li>
+                                }                            
+                                    <a href="@Url.Action("RequisitionFormMain", "Retrieval")">Create Stock Retrieval List</a>
+                                @:</li>
+                            @:</ul>
+                        @:</li>
+                        
+                            if (ViewBag.Title == "Completed Disbursement List" || ViewBag.Title == "Outstanding Disbursement List" || ViewBag.Title == "Disbursement Details")
+                            { 
+                                @:<li class="active"> 
+                            }
+                            else
+                            { 
+                                @:<li> 
+                            }
+                                <a href="@Url.Action("Outstanding", "Disbursement")">Disbursement List</a>
+                            @:</li>
+                            if (ViewBag.Title == "Create Purchase Order" || ViewBag.Title == "Order Details" || ViewBag.Title == "Order Approval" || ViewBag.Title == "Pending Approval Order")
+                            {
+                                @:<li class="active"> 
+                            }
+                            else
+                            { 
+                                @:<li> 
+                            }
+                                <a href="@Url.Action("OrderApproval", "Purchase")">Purchase Order</a>
+                            @:</li>
+                        @:</ul>
+                    @:</li>
+
+                        if (ViewBag.Title == "Usage Charge Back")
+                        {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                    
+                        <a href="@Url.Action("UsageChargeBack", "UsageChargeBack")">
+                            <i class="material-icons">update</i>
+                            <span>Usage Charge Back</span>
+                        </a>
+                    @:</li>
+                }
+
+                @if (ViewBag.user.Role.RoleID == 1 && ViewBag.user.Authorization == "Representative") //For Rep
+                {
+                    if(ViewBag.Title == "Completed Disbursement List" || ViewBag.Title == "Outstanding Disbursement List" || ViewBag.Title == "Disbursement Details")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                    <a href="@Url.Action("Outstanding", "Disbursement")" class="">
+                        <i class="material-icons">move_to_inbox</i>
+                        <span>Disbursement List</span>
+                    </a>
+                @:</li>
+                    if(ViewBag.Title == "Collection Point")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                    <a href="@Url.Action("CollectionPoint", "Disbursement")" class="">
+                        <i class="material-icons">pin_drop</i>
+                        <span>Collection Point</span>
+                    </a>
+                @:</li>
+                }
+                @if (ViewBag.user.Role.RoleID == 3 || ViewBag.user.Role.RoleID == 4 || ViewBag.user.Role.RoleID == 5) //For Clerk and Manager and Supervisor
+                {
+                    if(ViewBag.Title == "Suppliers" || ViewBag.Title == "Supplier Card")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                        <a href="@Url.Action("SupplierList", "Supplier")" class="">
+                            <i class="material-icons">note</i>
+                            <span>Supplier List</span>
+                        </a>
+                    @:</li>
+                    if (ViewBag.Title == "Department List")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                    
+                        <a href="@Url.Action("DepartmentList", "Department")" class="">
+                            <i class="material-icons">note</i>
+                            <span>Department List</span>
+                        </a>
+                    @:</li>
+                }
+                @if(ViewBag.user.Role.RoleID == 2) //For Dep Head
+                {
+                    if(ViewBag.Title == "Completed Disbursement List" || ViewBag.Title == "Outstanding Disbursement List" || ViewBag.Title == "Disbursement Details")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+
+                    <a href="@Url.Action("Outstanding", "Disbursement")" class="">
+                        <i class="material-icons">content_copy</i>
+                        <span>Disbursement List</span>
+                    </a>
+                    @:</li>
+
+
+
+                    if (ViewBag.Title == "Delegate Authority" || ViewBag.Title == "Delegate Authority" || ViewBag.Title == "Authorise Representative")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+                    
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">lock</i>
+                            <span>Authority</span>
+                        </a>
+                        @:<ul class="ml-menu">
+                            if(ViewBag.Title == "Delegate Authority" || ViewBag.Title == "Delegate Authority")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }
+                            if (ViewBag.user.Authorization == null)
+                            {
+                                <a href="@Url.Action("RevokeAuthority", "Authority")" class="">Revoke Authority</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("DelegateAuthority", "Authority")" class="">Delegate Authority</a>
+                            }
+                            @:</li>
+                            if(ViewBag.Title == "Authorise Representative")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }                            
+                                <a href="@Url.Action("AuthorityRep", "Authority")">Authorise Representative</a>
+                            @:</li>
+                        @:</ul>
+                    @:</li>
+                    
+                    if(ViewBag.Title == "Requisition Forms" || ViewBag.Title == "Requisition Details" || ViewBag.Title == "Pending Requisition Details")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+
+                    <a href="@Url.Action("DeptHeadReqMain", "Requisition")" class="">
+                        <i class="material-icons">content_copy</i>
+                        <span>Requisition</span>
+                    </a>
+                 @:</li>
+                }
+
+
+                @if (ViewBag.user.Role.RoleID == 4 || ViewBag.user.Role.RoleID == 5) //For Supervisor and Manager
+                {
+                    if(ViewBag.Title == "Order Approval" || ViewBag.Title == "Pending Approval Order" || ViewBag.Title == "Approved Order" || ViewBag.Title == "Rejected Order" || ViewBag.Title == "Approve Adjustment")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">content_copy</i>
+                            <span>Approvals</span>
+                        </a>
+                        @:<ul class="ml-menu">
+                            if(ViewBag.Title == "Order Approval" || ViewBag.Title == "Pending Approval Order" || ViewBag.Title == "Approved Order" || ViewBag.Title == "Rejected Order")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }
+                            
+                                <a href="@Url.Action("OrderApproval", "Purchase")">Purchase Order</a>
+                            @:</li>
+                            if(ViewBag.Title == "View Adjustment For Superior")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }
+                                <a href="@Url.Action("ViewAdjustmentForSuperior", "Adjustment")">Approve Adjustment</a>
+                            @:</li>
+                        @:</ul>
+                    @:</li>
+
+
+
+                    if(ViewBag.Title == "Report By Department" || ViewBag.Title == "Report Table Viewer" || ViewBag.Title == "Report View Table" || ViewBag.Title == "View Report")
+                    {
+                        @:<li class="active">
+                    }
+                    else
+                    {
+                        @:<li>
+                    }
+
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">content_copy</i>
+                            <span>Reports</span>
+                        </a>
+                        @:<ul class="ml-menu">
+                            if(ViewBag.Title == "Report By Department")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }
+                            
+                                <a href="@Url.Action("ReportByDep", "Report")">Orders By Department</a>
+                            @:</li>
+                            if(ViewBag.Title == "View Adjustment For Superior")
+                            {
+                                @:<li class="active">
+                            }
+                            else
+                            {
+                                @:<li>
+                            }
+                                <a href="@Url.Action("TableView", "Report")">Orders By Category</a>
+                            @:</li>
+                        @:</ul>
+                    @:</li>
+                                        
+                }                
+                                
+            </ul>
+        </div>
+        <!-- #Menu -->
+        <!-- Footer -->
+        <div class="legal">
+            <div class="copyright">
+                &copy; 2018  <a href="javascript:void(0);">SA45 Team1 Design</a>.
+            </div>
+            <div class="version">
+                <b>Version: </b> 1.0.0
+            </div>
+        </div>
+        <!-- #Footer -->
+    </aside>
+    <!-- #END# Left Sidebar -->
+    <!-- Right Sidebar -->
+    <!-- #END# Right Sidebar -->
+</section>

@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewBag.Title = "Report View Table";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+</head>
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <h1>Orders By Category</h1><br />
+            <div class="body table-responsive">
+                <form action="./TableShow" method="post">
+                <table class="table">
+
+                    <tbody>
+
+                        <tr>
+                            <th><h4>Category</h4></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_21" class="filled-in chk-col-blue" value="1" />
+                                <label for="md_checkbox_21">Clip</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_22" class="filled-in chk-col-blue" value="2" />
+                                <label for="md_checkbox_22">Envelope</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_23" class="filled-in chk-col-blue" value="3" />
+                                <label for="md_checkbox_23">Eraser</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_24" class="filled-in chk-col-blue" value="4" />
+                                <label for="md_checkbox_24">Exercise</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_25" class="filled-in chk-col-blue" value="5" />
+                                <label for="md_checkbox_25">File</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_47" class="filled-in chk-col-blue" value="6" />
+                                <label for="md_checkbox_47">Pen</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_48" class="filled-in chk-col-blue" value="7" />
+                                <label for="md_checkbox_48">Puncher</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_49" class="filled-in chk-col-blue" value="8" />
+                                <label for="md_checkbox_49">Pad</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_50" class="filled-in chk-col-blue" value="9" />
+                                <label for="md_checkbox_50">Paper</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_51" class="filled-in chk-col-blue" value="10" />
+                                <label for="md_checkbox_51">Ruler</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_52" class="filled-in chk-col-blue" value="11" />
+                                <label for="md_checkbox_52">Scissors</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_53" class="filled-in chk-col-blue" value="12" />
+                                <label for="md_checkbox_53">Tape</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_54" class="filled-in chk-col-blue" value="13" />
+                                <label for="md_checkbox_54">Sharpener</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_55" class="filled-in chk-col-blue" value="14" />
+                                <label for="md_checkbox_55">Shorthand</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_56" class="filled-in chk-col-blue" value="15" />
+                                <label for="md_checkbox_56">Stapler</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_57" class="filled-in chk-col-blue" value="16" />
+                                <label for="md_checkbox_57">Tacks</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_58" class="filled-in chk-col-blue" value="17" />
+                                <label for="md_checkbox_58">Tparency</label>
+                            </td>
+
+                            <td>
+                                <input name="category" type="checkbox" id="md_checkbox_59" class="filled-in chk-col-blue" value="18" />
+                                <label for="md_checkbox_59">Tray</label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td align="left"><button type="submit" class="btn btn-primary m-t-15 waves-effect">Generate</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+               </form>
+            </div>
+            <!-- #END# Basic Examples -->
+        </div>
+    </section>
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Stock Retrieval Disbursement Details";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Wait Me Css -->
+    <link href="../../plugins/waitme/waitMe.css" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+
+
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+
+    <!-- Bootstrap Spinner Css -->
+    <link href="../../plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
+
+</head>
+
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <form id="DisburseItems" action="./StockRetrievalDisbursement/@ViewBag.ritem.RetrievalID" method="post">
+                <!-- RetrievalItem Disbursement -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <h2>
+                                        Item - # @ViewBag.ritem.ItemCode
+                                        <input type="hidden" name="itemcode" value="@ViewBag.ritem.ItemCode" />
+                                        <input type="hidden" name="rdid" value="@ViewBag.ritem.RetrievalDetailID" />
+                                        <input type="hidden" name="rid" value="@ViewBag.ritem.RetrievalID" />
+                                    </h2>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <button type="button" class="btn btn-primary waves-effect" onclick="submitForm()" value="Submit form">Update</button>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Requisiton#</th>
+                                                <th>Department</th>
+                                                <th>Qty Needed</th>
+                                                <th>Qty Allocated</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="2">Retrieval Qty</th>
+                                                <th>@ViewBag.retQty</th>
+                                                <th>Total</th>
+                                                <th><strong><input name="total" id="total" readonly/></strong></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.inlist)
+                                            {
+                                                <tr>
+                                                    <th>@string.Format("{0:dd/MM/yyyy}", @item.Requisition.AuthorizedDate)</th>
+                                                    <th>
+                                                        @item.RequisitionID
+                                                        <input type="hidden" name="reqid" value="@item.RequisitionID" />
+                                                        <input type="hidden" name="reqdid" value="@item.RequisitionDetailID" />
+                                                    </th>
+                                                    <th>
+                                                        @foreach (var itemo in ViewBag.rlist)
+                                                        {
+                                                            if (itemo.RequisitionID == item.RequisitionID)
+                                                            {
+                                                                @itemo.Employee1.DepartmentID;
+                                                            }
+                                                        }
+                                                    </th>
+                                                    <th>@item.OutstandingQty</th>
+                                                    <th>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                            <div class="input-group spinner" data-trigger="spinner">
+                                                                <div class="form-line">
+                                                                    <input type="number" class="qty" name="disbursedQty" data-rule="quantity" value="@item.DisbursedQty" onchange="findTotal()" min= "0" max="@item.OutstandingQty">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Retrieval Item Disbursement -->
+            </form>
+        </div>
+    </section>
+    
+    <!--Javascript - Summation-->
+    <script>
+        function findTotal()
+        {
+            var total = 0;
+            for (var i = 0; i < document.getElementsByClassName("qty").length; i++)
+            {
+                total += document.getElementsByClassName("qty")[i].value * 1;
+            }
+            document.getElementById("total").value = total;
+        }
+   
+        function submitForm()
+        {
+            var rqty = @ViewBag.retQty;
+            if(document.getElementById("total").value != rqty)
+            {
+                alert("Please ensure total disbursed quantity match retrieved quantity.");
+            }
+            else if (document.getElementById("total").value == rqty)
+            {
+                document.getElementById("DisburseItems").submit();
+            }
+        }
+    </script>
+    
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Jquery Spinner Plugin Js -->
+    <script src="../../plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+</body>
+
+</html>

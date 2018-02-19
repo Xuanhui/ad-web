@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | Logic University Stationary Store Inventory System</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core Css -->
+    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Custom Css -->
+    <link href="../../css/style.css" rel="stylesheet">
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+</head>
+<body class="theme-blue">
+    @Html.Partial("_NavBar")
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>Reorder</h2>
+            </div>
+            <!-- Basic Table -->
+            <form action="./CreatePurchaseOrder" onsubmit="return changeText()" method="post">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="body table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item #</th>
+                                            <th>Description</th>
+                                            <th>Suppliers</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                        
+                                        @for (int i = 0; i < ViewBag.clist.Count; i++)
+                                        {
+                                            for (var j = 0; j < ViewBag.slist.Count; j++)
+                                            {
+                                                if (ViewBag.clist[i].ItemCode == ViewBag.slist[j].ItemCode)
+                                                {
+                                                    <tr>
+                                                        @if (j % 3 == 0)
+                                                        {
+                                                            <th scope="row">@ViewBag.clist[i].ItemCode <input type="hidden" class="miniqty" value="@ViewBag.clist[i].ReorderMinQty" /></th>
+                                                            <td>@ViewBag.clist[i].Description</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <th></th>
+                                                            <td></td>
+                                                        }
+
+
+                                                        @if (ViewBag.clist[i].ItemCode == ViewBag.slist[j].ItemCode)
+                                                        {
+                                                            <td>
+                                                                @ViewBag.slist[j].SupplierID
+                                                                <input type="hidden" name="items" value="@ViewBag.clist[i].ItemCode" />
+                                                                <input type="hidden" name="supplier" value="@ViewBag.slist[j].SupplierID" />
+                                                            </td>
+                                                            <td>
+                                                                @if (j % 3== 0)
+                                                                {
+                                                                    <input type="text" class="form-control @j" name="qty" value="@ViewBag.clist[i].ReorderMinQty">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="text" class="form-control @j" name="qty" value="0">
+                                                                }
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div align ="right"><button type="submit" class="btn btn-primary waves-effect" name="submitorder">Submit Order</button></div><br />
+                </div>
+            </form>
+            <!-- #END# Basic Table -->
+        </div>
+    </section>
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script>
+        function changeText() {
+            for (var i = 0; i < @ViewBag.clist.Count; i++) {                
+                if (document.getElementsByClassName('miniqty')[i].value * 1 >( document.getElementsByClassName('0')[i].value * 1 + document.getElementsByClassName('1')[i].value * 1 + document.getElementsByClassName('2')[i].value * 1))
+                {  alert("Cannot less than "+document.getElementsByClassName('miniqty')[i].value);
+                document.getElementsByClassName('0')[i].value = "Cannot less than "+document.getElementsByClassName('miniqty')[i].value;
+                document.getElementsByClassName('1')[i].value = "Cannot less than "+document.getElementsByClassName('miniqty')[i].value;
+                    return false;}
+                else
+                {}
+            }
+        }
+    </script>
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+
+</body>
+</html>
